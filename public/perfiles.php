@@ -108,12 +108,6 @@ echo '<!DOCTYPE html>
             <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
         </ul>
     </div>
-
-    <div id="content">
-        <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
-        <div id="galeria">';
-
-<body>
     <div id="perfiles">';
 
 // Mostrar perfiles
