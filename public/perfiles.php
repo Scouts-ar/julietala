@@ -43,27 +43,67 @@ $perfiles = obtenerPerfiles('perfiles');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Perfiles</title>
   <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+      font-size: 2.5rem;
+    }
+
     .perfil-container {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 20px;
-      margin-top: 20px;
+      padding: 20px;
+      justify-items: center;
     }
+
     .perfil {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
       cursor: pointer;
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      width: 180px;
+      overflow: hidden;
     }
+
+    .perfil:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
     .perfil img {
       width: 100px;
       height: 100px;
       object-fit: cover;
       border-radius: 50%;
+      border: 2px solid #ddd;
+      margin-bottom: 10px;
     }
+
     .perfil h3 {
-      font-size: 1rem;
-      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 8px;
     }
-    /* Estilos del modal */
+
+    .perfil p {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -74,20 +114,55 @@ $perfiles = obtenerPerfiles('perfiles');
       background: rgba(0, 0, 0, 0.7);
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
+
     .modal-content {
-      background: white;
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      width: 300px;
+      width: 320px;
       text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+
     .modal-close {
-      background: red;
+      background: #ff4d4d;
       color: white;
       border: none;
       padding: 10px;
       cursor: pointer;
+      font-size: 1rem;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .modal-close:hover {
+      background: #ff3333;
+    }
+
+    @media (max-width: 1200px) {
+      .perfil-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .perfil-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .perfil-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .perfil-container {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -99,6 +174,7 @@ $perfiles = obtenerPerfiles('perfiles');
       <div class="perfil" data-id="<?php echo $perfil['id']; ?>" onclick="abrirModal(<?php echo htmlspecialchars(json_encode($perfil)); ?>)">
         <img src="perfiles/<?php echo $perfil['imagen']; ?>" alt="Foto de Perfil">
         <h3><?php echo $perfil['nombre']; ?></h3>
+        <p>@<?php echo $perfil['instagram']; ?></p>
       </div>
     <?php endforeach; ?>
   </div>
