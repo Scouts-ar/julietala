@@ -44,11 +44,47 @@ echo '<!DOCTYPE html>
     <title>Perfiles</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #menu-toggle {
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 2000;
+        }
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Oculto inicialmente */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            padding-top: 60px;
+            transition: left 0.3s;
+            z-index: 1500;
+        }
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #sidebar ul li {
+            padding: 15px;
+            text-align: center;
+        }
+        #sidebar ul li a img {
+            width: 40px;
+            height: auto;
+        }
         #perfiles {
             display: grid;
             grid-template-columns: repeat(5, 1fr); /* 5 perfiles por fila */
             gap: 15px;
             padding: 20px;
+            margin-left: 0; /* Espacio para el menú */
         }
         #perfiles .perfil {
             text-align: center;
@@ -57,12 +93,12 @@ echo '<!DOCTYPE html>
             padding: 10px;
             background-color: #f9f9f9;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
         #perfiles img {
             width: 100%;
             height: auto;
             border-radius: 5px;
-            cursor: pointer;
         }
         .modal {
             display: none;
@@ -82,6 +118,7 @@ echo '<!DOCTYPE html>
             background-color: #fff;
             border-radius: 10px;
             text-align: center;
+            position: relative;
         }
         .modal .close {
             position: absolute;
@@ -101,11 +138,6 @@ echo '<!DOCTYPE html>
             <li><a href="perfiles.html"><img src="logos/perfiles.png" alt="Perfiles"></a></li>
             <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
-        </ul>
-        <div class="instagram-title">Instagram</div>
-        <ul id="social-media">
-            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
-            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
         </ul>
     </div>
     <div id="perfiles">';
@@ -132,6 +164,19 @@ echo '</div>
     </div>
 
     <script>
+        // Menú desplegable
+        var sidebar = document.getElementById("sidebar");
+        var menuToggle = document.getElementById("menu-toggle");
+        
+        menuToggle.onclick = function() {
+            if (sidebar.style.left === "-250px") {
+                sidebar.style.left = "0";
+            } else {
+                sidebar.style.left = "-250px";
+            }
+        };
+
+        // Modal
         var modal = document.getElementById("myModal");
         var modalNombre = document.getElementById("modalNombre");
         var modalImagen = document.getElementById("modalImagen");
