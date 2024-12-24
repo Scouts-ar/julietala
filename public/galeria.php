@@ -3,6 +3,7 @@
 $directorio = 'fotos';
 $imagenes = array_diff(scandir($directorio), array('..', '.'));
 
+// HTML inicial
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,13 +11,28 @@ echo '<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería de Fotos</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #galeria {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+        }
+        #galeria img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        #galeria img:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
-
-    <!-- Icono de las tres rayitas -->
     <div id="menu-toggle">&#9776;</div>
-
-    <!-- Barra lateral -->
     <div id="sidebar">
         <ul>
             <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
@@ -24,14 +40,7 @@ echo '<!DOCTYPE html>
             <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
         </ul>
-        <div class="instagram-title">Instagram</div>
-        <ul id="social-media">
-            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
-            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
-        </ul>
     </div>
-
-    <!-- Contenido principal -->
     <div id="content">
         <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
         <div id="galeria">';
@@ -49,7 +58,6 @@ if (!empty($imagenes)) {
 // Cierre del HTML
 echo '        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>';
