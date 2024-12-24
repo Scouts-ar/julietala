@@ -11,6 +11,7 @@ echo '<!DOCTYPE html>
     <title>Galería de Fotos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Estilos para la galería */
         #galeria {
             display: flex;
             flex-wrap: wrap;
@@ -29,6 +30,7 @@ echo '<!DOCTYPE html>
         #galeria img:hover {
             transform: scale(1.1);
         }
+
         /* Modal styles */
         #modal {
             display: none;
@@ -68,17 +70,18 @@ echo '<!DOCTYPE html>
         #modal .next-btn {
             right: 60px;
         }
-        /* Sidebar styles */
+
+        /* Estilos para el menú lateral */
         #sidebar {
             position: fixed;
-            left: 0;
+            left: -250px;
             top: 0;
             width: 250px;
             height: 100%;
             background-color: #333;
             color: white;
             padding-top: 20px;
-            display: block;
+            transition: left 0.3s ease;
             z-index: 100;
         }
         #sidebar ul {
@@ -97,9 +100,27 @@ echo '<!DOCTYPE html>
         #sidebar ul li a:hover {
             background-color: #444;
         }
+        /* Icono de las tres rayas */
+        #menu-toggle {
+            font-size: 30px;
+            color: #333;
+            cursor: pointer;
+            margin-left: 20px;
+            display: block;
+        }
+
+        /* Estilos para el contenido */
+        #content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
     </style>
 </head>
 <body>
+    <!-- Icono de las tres rayas para mostrar el menú -->
+    <div id="menu-toggle">&#9776;</div>
+
+    <!-- Sidebar -->
     <div id="sidebar">
         <ul>
             <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
@@ -107,8 +128,14 @@ echo '<!DOCTYPE html>
             <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
         </ul>
+        <div class="instagram-title">Instagram</div>
+        <ul id="social-media">
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
+        </ul>
     </div>
 
+    <!-- Contenido principal -->
     <div id="content">
         <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
         <div id="galeria">';
@@ -143,6 +170,7 @@ echo '<!DOCTYPE html>
         const thumbnails = document.querySelectorAll(".thumbnail");
         let currentIndex = -1;
 
+        // Función para abrir el modal
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.addEventListener("click", () => {
                 currentIndex = index;
@@ -150,6 +178,7 @@ echo '<!DOCTYPE html>
             });
         });
 
+        // Funciones para cambiar de imagen
         closeBtn.addEventListener("click", closeModal);
         prevBtn.addEventListener("click", showPrevImage);
         nextBtn.addEventListener("click", showNextImage);
@@ -172,6 +201,20 @@ echo '<!DOCTYPE html>
             currentIndex = (currentIndex === thumbnails.length - 1) ? 0 : currentIndex + 1;
             modalImg.src = thumbnails[currentIndex].src;
         }
+
+        // Mostrar u ocultar el sidebar
+        const menuToggle = document.getElementById("menu-toggle");
+        menuToggle.addEventListener("click", () => {
+            const sidebar = document.getElementById("sidebar");
+            const content = document.getElementById("content");
+            if (sidebar.style.left === "-250px") {
+                sidebar.style.left = "0";
+                content.style.marginLeft = "250px";
+            } else {
+                sidebar.style.left = "-250px";
+                content.style.marginLeft = "0";
+            }
+        });
     </script>
 </body>
 </html>';
