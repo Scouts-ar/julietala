@@ -3,7 +3,6 @@
 $directorio = 'fotos';
 $imagenes = array_diff(scandir($directorio), array('..', '.'));
 
-// HTML inicial
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,7 +11,6 @@ echo '<!DOCTYPE html>
     <title>Galería de Fotos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilo para la galería */
         #galeria {
             display: flex;
             flex-wrap: wrap;
@@ -31,8 +29,7 @@ echo '<!DOCTYPE html>
         #galeria img:hover {
             transform: scale(1.1);
         }
-        
-        /* Estilo para el Modal */
+        /* Modal styles */
         #modal {
             display: none;
             position: fixed;
@@ -40,58 +37,69 @@ echo '<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
-        }
-        #modal-content {
-            position: relative;
-            background-color: white;
-            padding: 20px;
-            max-width: 80%;
-            max-height: 80%;
-            overflow: auto;
+            z-index: 1000;
         }
         #modal img {
-            width: 100%;
-            height: auto;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            cursor: zoom-in;
         }
-        #modal-close {
+        #modal .close-btn, #modal .prev-btn, #modal .next-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 30px;
+            top: 20px;
             color: white;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-        }
-        #modal-prev, #modal-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
             font-size: 30px;
-            color: white;
-            background-color: transparent;
+            background-color: rgba(0, 0, 0, 0.6);
             border: none;
+            padding: 10px;
             cursor: pointer;
+            z-index: 10;
         }
-        #modal-prev {
-            left: 10px;
+        #modal .close-btn {
+            right: 20px;
         }
-        #modal-next {
-            right: 10px;
+        #modal .prev-btn {
+            left: 20px;
         }
-
-        /* Estilo para el formulario de agregar imágenes */
-        #upload-form {
+        #modal .next-btn {
+            right: 60px;
+        }
+        /* Sidebar styles */
+        #sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding-top: 20px;
+            display: block;
+            z-index: 100;
+        }
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #sidebar ul li {
+            padding: 15px;
             text-align: center;
-            margin-top: 20px;
+        }
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        #sidebar ul li a:hover {
+            background-color: #444;
         }
     </style>
 </head>
 <body>
-    <div id="menu-toggle">&#9776;</div>
     <div id="sidebar">
         <ul>
             <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
@@ -100,26 +108,16 @@ echo '<!DOCTYPE html>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
         </ul>
     </div>
+
     <div id="content">
         <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
-        
-        <!-- Formulario para subir imágenes -->
-        <div id="upload-form">
-            <h2>Agregar una nueva imagen</h2>
-            <form action="subir_imagen.php" method="post" enctype="multipart/form-data">
-                <input type="file" name="imagen" required>
-                <button type="submit">Subir Imagen</button>
-            </form>
-        </div>
-
-        <!-- Galería de imágenes -->
         <div id="galeria">';
-        
+
         // Mostrar imágenes
         if (!empty($imagenes)) {
             foreach ($imagenes as $index => $imagen) {
                 $rutaCompleta = $directorio . '/' . $imagen;
-                echo '<img src="' . $rutaCompleta . '" alt="Imagen" onclick="openModal(' . $index . ')">';
+                echo '<img src="' . $rutaCompleta . '" alt="Imagen" data-index="' . $index . '" class="thumbnail">';
             }
         } else {
             echo '<p style="color: white; text-align: center;">No hay imágenes en la carpeta.</p>';
@@ -127,39 +125,52 @@ echo '<!DOCTYPE html>
 
         echo '    </div>
     </div>
-    
-    <!-- Modal para mostrar la imagen grande -->
-    <div id="modal">
-        <div id="modal-content">
-            <button id="modal-close" onclick="closeModal()">x</button>
-            <button id="modal-prev" onclick="prevImage()">&#60;</button>
-            <img id="modal-image" src="" alt="Imagen grande">
-            <button id="modal-next" onclick="nextImage()">&#62;</button>
-        </div>
-    </div>
-    
-    <script>
-        var imagenes = ' . json_encode($imagenes) . ';
-        var modalIndex = -1;
 
-        function openModal(index) {
-            modalIndex = index;
-            document.getElementById("modal-image").src = "fotos/" + imagenes[modalIndex];
-            document.getElementById("modal").style.display = "flex";
+    <!-- Modal -->
+    <div id="modal">
+        <button class="close-btn">&times;</button>
+        <button class="prev-btn">&#60;</button>
+        <button class="next-btn">&#62;</button>
+        <img src="" alt="Imagen Modal" id="modal-img">
+    </div>
+
+    <script>
+        const modal = document.getElementById("modal");
+        const modalImg = document.getElementById("modal-img");
+        const closeBtn = document.querySelector(".close-btn");
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const thumbnails = document.querySelectorAll(".thumbnail");
+        let currentIndex = -1;
+
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.addEventListener("click", () => {
+                currentIndex = index;
+                openModal();
+            });
+        });
+
+        closeBtn.addEventListener("click", closeModal);
+        prevBtn.addEventListener("click", showPrevImage);
+        nextBtn.addEventListener("click", showNextImage);
+
+        function openModal() {
+            modal.style.display = "flex";
+            modalImg.src = thumbnails[currentIndex].src;
         }
 
         function closeModal() {
-            document.getElementById("modal").style.display = "none";
+            modal.style.display = "none";
         }
 
-        function prevImage() {
-            modalIndex = (modalIndex > 0) ? modalIndex - 1 : imagenes.length - 1;
-            document.getElementById("modal-image").src = "fotos/" + imagenes[modalIndex];
+        function showPrevImage() {
+            currentIndex = (currentIndex === 0) ? thumbnails.length - 1 : currentIndex - 1;
+            modalImg.src = thumbnails[currentIndex].src;
         }
 
-        function nextImage() {
-            modalIndex = (modalIndex < imagenes.length - 1) ? modalIndex + 1 : 0;
-            document.getElementById("modal-image").src = "fotos/" + imagenes[modalIndex];
+        function showNextImage() {
+            currentIndex = (currentIndex === thumbnails.length - 1) ? 0 : currentIndex + 1;
+            modalImg.src = thumbnails[currentIndex].src;
         }
     </script>
 </body>
