@@ -14,7 +14,7 @@ echo '<!DOCTYPE html>
     <style>
         #galeria {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr); /* 4 imágenes por fila */
             gap: 15px;
             justify-items: center;
             padding: 20px;
@@ -47,12 +47,15 @@ echo '<!DOCTYPE html>
         .modal-content {
             position: relative;
             max-width: 90%;
-            max-height: 80%;
+            max-height: 90%;
             margin: 0 auto;
+            overflow: hidden;
         }
         .modal img {
             width: 100%;
             height: auto;
+            max-height: 80vh; /* Limita la altura máxima de la imagen */
+            object-fit: contain; /* Asegura que la imagen se ajuste sin distorsionarse */
             border-radius: 10px;
         }
         .modal .close {
