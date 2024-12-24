@@ -99,7 +99,13 @@ echo '<!DOCTYPE html>
             <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
         </ul>
+        <div class="instagram-title">Instagram</div>
+        <ul id="social-media">
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
+        </ul>
     </div>
+
     <div id="content">
         <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
         <div id="galeria">';
