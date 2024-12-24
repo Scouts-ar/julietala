@@ -94,6 +94,26 @@ echo '<!DOCTYPE html>
     </style>
 </head>
 <body>
+    <div id="menu-toggle">&#9776;</div>
+    <div id="sidebar">
+        <ul>
+            <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
+            <li><a href="perfiles.html"><img src="logos/perfiles.png" alt="Perfiles"></a></li>
+            <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
+            <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
+        </ul>
+        <div class="instagram-title">Instagram</div>
+        <ul id="social-media">
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
+        <div id="galeria">';
+
+<body>
     <div id="perfiles">';
 
 // Mostrar perfiles
