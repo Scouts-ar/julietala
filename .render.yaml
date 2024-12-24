@@ -1,0 +1,8 @@
+services:
+  - name: galeria-php
+    type: web
+    runtime: php
+    env: static
+    buildCommand: ""
+    startCommand: php -S 0.0.0.0:10000 -t public
+    staticPublishPath: public
