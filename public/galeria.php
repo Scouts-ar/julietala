@@ -1,6 +1,6 @@
 <?php
-// Configuración de la carpeta de imágenes
-$directorio = 'fotos';
+// ConfiguraciÃ³n de la carpeta de imÃ¡genes
+$directorio = 'imagenes';
 $imagenes = array_diff(scandir($directorio), array('..', '.'));
 
 // HTML inicial
@@ -9,7 +9,7 @@ echo '<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Fotos</title>
+    <title>GalerÃ­a de Fotos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         #galeria {
@@ -42,17 +42,17 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
     <div id="content">
-        <h1 id="bienvenida-titulo">Galería de <span style="color: #FFD700;">Imágenes</span></h1>
+        <h1 id="bienvenida-titulo">GalerÃ­a de <span style="color: #FFD700;">ImÃ¡genes</span></h1>
         <div id="galeria">';
 
-// Mostrar imágenes
+// Mostrar imÃ¡genes
 if (!empty($imagenes)) {
     foreach ($imagenes as $imagen) {
         $rutaCompleta = $directorio . '/' . $imagen;
         echo '<img src="' . $rutaCompleta . '" alt="Imagen">';
     }
 } else {
-    echo '<p style="color: white; text-align: center;">No hay imágenes en la carpeta.</p>';
+    echo '<p style="color: white; text-align: center;">No hay imÃ¡genes en la carpeta.</p>';
 }
 
 // Cierre del HTML
