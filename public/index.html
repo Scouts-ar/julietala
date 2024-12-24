@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Scout</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilo para las imágenes laterales */
+        .contenedor-bienvenida {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .imagen-lateral {
+            width: 150px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        #bienvenida-img {
+            width: 90%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        #descripcion-bienvenida {
+            margin-top: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        #bienvenida-titulo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menu-toggle">&#9776;</div> <!-- Icono de las tres rayitas -->
+
+    <div id="sidebar">
+        <ul>
+            <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
+            <li><a href="perfiles.html"><img src="logos/perfiles.png" alt="Perfiles"></a></li>
+            <li><a href="historia.html"><img src="logos/historia.png" alt="Historia"></a></li>
+            <li><a href="fotod/fotos.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
+        </ul>
+        <div class="instagram-title">Instagram</div>
+        <ul id="social-media">
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 1"></a></li>
+            <li><a href="#"><img src="logos/instagram.jpg" alt="Instagram 2"></a></li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <div id="imagen-bienvenida">
+            <h1 id="bienvenida-titulo">COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
+            <div class="contenedor-bienvenida">
+                <img src="logos/izquierda.jpg" alt="Imagen Izquierda" class="imagen-lateral">
+                <a href="pagina-destino.html">
+                    <img src="logos/bienvenida.jpg" alt="Bienvenida" id="bienvenida-img">
+                </a>
+                <img src="logos/derecha.jpg" alt="Imagen Derecha" class="imagen-lateral">
+            </div>
+            <p id="descripcion-bienvenida">nosotros somos la <strong>Comunidad rover Prempeh</strong>, lleno de personas buena onda y con un potencial enorme en pensar hacia el futuro creando un mundo mejor y poder canbiar tu vida</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

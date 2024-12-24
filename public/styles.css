@@ -1,0 +1,180 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #FF6347, #8B0000); /* Degradado de tojo claro en el centro a rojo oscuro en los bordes */
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 150px; /* Asegura que el contenido no se superponga con la barra lateral */
+}
+
+/* Estilos para el icono de tres rayitas (hamburger menu) */
+#menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    z-index: 1000;
+}
+
+/* Estilos para la barra lateral */
+#sidebar {
+    width: 0;
+    height: 100vh;
+    background-color: rgba(139, 0, 0, 0.7); /* Rojo oscuro con mayor transparencia (70%) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    display: none;
+}
+
+#sidebar.open ul li {
+    display: block;
+}
+
+#sidebar ul li a {
+    display: block;
+}
+
+#sidebar ul li a img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+#sidebar ul li a:hover img {
+    transform: scale(1.1);
+}
+
+.instagram-title {
+    text-align: center;
+    color: #fff;
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    display: none;
+}
+
+#social-media {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#social-media li {
+    padding: 10px;
+}
+
+#social-media li a img {
+    width: 30px;
+    height: 30px;
+}
+
+#sidebar.open {
+    width: 125px;
+}
+
+#sidebar.open .instagram-title {
+    display: block;
+}
+
+#menu-toggle.open {
+    display: none;
+}
+
+/* Estilos para el contenido principal */
+#content {
+    padding: 20px;
+    color: #fff;
+}
+
+#imagen-bienvenida {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#bienvenida-img {
+    width: 80%;
+    max-width: 450px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+#bienvenida-titulo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: -20px;
+    text-align: center;
+}
+
+#bienvenida-titulo span {
+    color: #FFD700; /* Color dorado para "Prempeh" */
+}
+
+#descripcion-bienvenida {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Estilos de responsive */
+@media (max-width: 768px) {
+    #menu-toggle {
+        font-size: 40px;
+    }
+
+    #sidebar {
+        width: 0;
+        height: auto;
+        position: relative;
+    }
+
+    #sidebar.open {
+        width: 100%;
+    }
+
+    #sidebar ul li {
+        text-align: left;
+        padding: 10px;
+    }
+
+    #content {
+        margin-left: 0;
+    }
+}
+
+
