@@ -21,19 +21,18 @@ echo '<!DOCTYPE html>
         }
         #header {
             text-align: center;
-            padding: 20px 10px;
-            background: rgba(0, 0, 0, 0.3);
-            width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0;
-            left: 0;
+            padding: 10px 30px;
+            width: calc(100% - 60px);
+            margin: 20px auto;
+            background: transparent;  /* 100% invisible */
+            box-shadow: none;
+            position: relative;
             z-index: 1000;
         }
         #header h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;  /* Título más pequeño */
             margin: 0;
-            color: #FFD700;
+            color: transparent;  /* Texto invisible */
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
