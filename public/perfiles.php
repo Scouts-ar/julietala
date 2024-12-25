@@ -4,14 +4,14 @@ echo '<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfiles</title>
+    <title>Página con Fondo Degradado</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         /* Estilo base de la página */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #d32f2f, #b71c1c); /* Fondo rojo degradado */
+            background: radial-gradient(circle, #b71c1c, #d32f2f, #8b0000); /* Fondo degradado de rojo claro a oscuro */
             height: 100vh;
             color: white;
         }
@@ -63,6 +63,19 @@ echo '<!DOCTYPE html>
             height: 30px;
         }
 
+        /* Contenedor principal */
+        .content {
+            padding: 20px;
+            margin-left: 260px; /* Espacio para la barra lateral */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+    </style>
+    <script src="script.js"></script>
 </head>
 <body>
     <div id="menu-toggle">&#9776;</div>
@@ -74,15 +87,21 @@ echo '<!DOCTYPE html>
             <li><a href="galeria.php"><img src="logos/fotos.png" alt="Fotos"></a></li>
         </ul>
     </div>
-    <div id="perfiles">';
 
-// Mostrar perfiles (puedes cargar los perfiles desde tu base de datos o una variable PHP)
-foreach ($perfiles as $index => $perfil) {
-    echo '<div class="perfil" onclick="openModal(' . $index . ')">
-            <img src="' . htmlspecialchars($directorio) . '/' . htmlspecialchars($perfil['imagen']) . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
-            <h3>' . htmlspecialchars($perfil['nombre']) . '</h3>
-        </div>';
-}
+    <div class="content">
+        <h1>Bienvenidos a la Página</h1>
+        <p>Este es un ejemplo de página con un fondo degradado que va de un rojo oscuro en los bordes a un rojo más claro en el centro. Puedes personalizar el contenido a tu gusto.</p>
+    </div>
 
+    <script>
+        // Script para abrir y cerrar la barra lateral
+        var menuToggle = document.getElementById("menu-toggle");
+        var sidebar = document.getElementById("sidebar");
+
+        menuToggle.addEventListener("click", function() {
+            sidebar.classList.toggle("open");
+        });
+    </script>
+</body>
 </html>';
 ?>
