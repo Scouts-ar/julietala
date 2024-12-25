@@ -62,7 +62,7 @@ echo '<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(50, 50, 50, 0.5);
+            background-color: rgba(50, 50, 50, 0.5); /* Fondo gris oscuro con transparencia */
             justify-content: center;
             align-items: center;
         }
@@ -70,8 +70,9 @@ echo '<!DOCTYPE html>
             display: flex;
             background-color: #fff;
             border-radius: 10px;
-            width: 80%;
-            max-height: 80%;
+            width: 70%;
+            max-width: 1200px;
+            height: 80%;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         .modal-left {
@@ -81,6 +82,8 @@ echo '<!DOCTYPE html>
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            background-color: #f3f3f3;
+            border-radius: 10px 0 0 10px;
         }
         .modal-left img {
             width: 200px;
@@ -97,12 +100,20 @@ echo '<!DOCTYPE html>
         .modal-right {
             flex: 2;
             padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         .modal-right h2 {
             margin: 0 0 20px;
+            font-size: 24px;
+            color: #333;
         }
         .modal-right p {
             line-height: 1.6;
+            font-size: 16px;
+            color: #555;
+            text-align: justify;
         }
         .close {
             position: absolute;
