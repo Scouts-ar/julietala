@@ -62,7 +62,7 @@ echo '<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(50, 50, 50, 0.5); /* Fondo gris oscuro con transparencia */
+            background-color: rgba(50, 50, 50, 0.5);
             justify-content: center;
             align-items: center;
         }
@@ -130,7 +130,7 @@ echo '<!DOCTYPE html>
 // Mostrar perfiles
 foreach ($perfiles as $index => $perfil) {
     echo '<div class="perfil" onclick="openModal(' . $index . ')">
-            <img src="' . $directorio . '/' . $perfil['imagen'] . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
+            <img src="' . htmlspecialchars($directorio) . '/' . htmlspecialchars($perfil['imagen']) . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
             <h3>' . htmlspecialchars($perfil['nombre']) . '</h3>
         </div>';
 }
@@ -169,7 +169,7 @@ echo '</div>
             var perfil = perfiles[index];
             modal.style.display = "flex";
             modalNombre.textContent = perfil.nombre;
-            modalImagen.src = "' . $directorio . '/" + perfil.imagen;
+            modalImagen.src = "' . htmlspecialchars($directorio) . '/" + perfil.imagen;
             modalDescripcion.textContent = perfil.descripcion || "Sin descripción";
             modalInstagram.href = perfil.instagram ? "https://instagram.com/" + perfil.instagram : "#";
         }
