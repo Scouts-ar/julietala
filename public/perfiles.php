@@ -1,4 +1,8 @@
 <?php
+// Escanea la carpeta perfiles
+$dir = 'perfiles';
+$files = array_diff(scandir($dir), array('..', '.'));
+
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +18,6 @@ echo '<!DOCTYPE html>
             height: 100vh;
             color: white;
         }
-
         #menu-toggle {
             font-size: 30px;
             cursor: pointer;
@@ -24,7 +27,6 @@ echo '<!DOCTYPE html>
             z-index: 2000;
             color: white;
         }
-
         #sidebar {
             position: fixed;
             top: 0;
@@ -36,31 +38,21 @@ echo '<!DOCTYPE html>
             transition: left 0.3s;
             z-index: 1500;
         }
-
         #sidebar.open {
             left: 0;
         }
-
         #sidebar ul {
             list-style: none;
             padding: 0;
         }
-
         #sidebar li {
             padding: 15px;
             text-align: center;
         }
-
         #sidebar li a {
             color: white;
             text-decoration: none;
         }
-
-        #sidebar li a img {
-            width: 30px;
-            height: 30px;
-        }
-
         #header {
             text-align: center;
             padding: 20px 10px;
@@ -72,7 +64,6 @@ echo '<!DOCTYPE html>
             left: 0;
             z-index: 1000;
         }
-
         #header h1 {
             font-size: 2rem;
             margin: 0;
@@ -80,10 +71,58 @@ echo '<!DOCTYPE html>
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
-
         .content {
-            padding: 80px 20px 20px; /* Espacio para el encabezado */
+            padding: 100px 20px 20px;
             text-align: center;
+        }
+        #profile-list {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        #profile-list li {
+            list-style: none;
+            margin: 10px 0;
+        }
+        #profile-list a {
+            color: #FFD700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Estilo modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            color: black;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -98,19 +137,44 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
 
-    <!-- Título en la parte superior -->
     <div id="header">
         <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
     </div>
 
-    <!-- Contenido principal -->
     <div class="content">
-        <p>Bienvenido a la comunidad. Aquí puedes explorar información y fotos de nuestros miembros.</p>
-        <img src="logos/bienvenida.png" alt="Bienvenida a la comunidad" width="300px">
+        <p>Bienvenido a la comunidad. Haz clic en un perfil para verlo.</p>
+        <ul id="profile-list">';
+
+// Listar los archivos HTML
+foreach ($files as $file) {
+    if (pathinfo($file, PATHINFO_EXTENSION) == 'html') {
+        $name = pathinfo($file, PATHINFO_FILENAME);
+        echo "<li><a href='#' onclick='openModal(\"$dir/$file\")'>$name</a></li>";
+    }
+}
+
+echo '</ul>
     </div>
 
-    <!-- Script para la barra lateral -->
-    <script src="script.js"></script>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <iframe id="modal-iframe" width="100%" height="500px"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openModal(url) {
+            var modal = document.getElementById("myModal");
+            var iframe = document.getElementById("modal-iframe");
+            iframe.src = url;
+            modal.style.display = "block";
+        }
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
 </body>
 </html>';
 ?>
