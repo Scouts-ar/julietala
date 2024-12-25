@@ -1,4 +1,40 @@
 <?php
+// Configuración de la carpeta de perfiles
+$directorio = 'perfiles';
+$archivos = array_diff(scandir($directorio), array('..', '.'));
+$perfiles = [];
+
+// Extraer información de cada archivo HTML en la carpeta
+foreach ($archivos as $archivo) {
+    if (pathinfo($archivo, PATHINFO_EXTENSION) === 'html') {
+        $contenido = file_get_contents($directorio . '/' . $archivo);
+        $nombre = $instagram = $descripcion = '';
+        $nombrePerfil = pathinfo($archivo, PATHINFO_FILENAME);
+
+        // Extraer información del HTML
+        if (preg_match('/<h3>(.*?)<\/h3>/', $contenido, $matchNombre)) {
+            $nombre = $matchNombre[1];
+        }
+        if (preg_match('/Instagram:\s*(.*?)<\/p>/', $contenido, $matchInstagram)) {
+            $instagram = $matchInstagram[1];
+        }
+        if (preg_match('/<p>(?!Instagram)(.*?)<\/p>/', $contenido, $matchDescripcion)) {
+            $descripcion = $matchDescripcion[1];
+        }
+
+        // Verificar si existe la imagen correspondiente
+        $imagen = file_exists("$directorio/$nombrePerfil.jpg") ? "$nombrePerfil.jpg" : "default.jpg";
+
+        // Agregar perfil al array
+        $perfiles[] = [
+            'nombre' => $nombre,
+            'instagram' => $instagram,
+            'descripcion' => $descripcion,
+            'imagen' => $imagen,
+        ];
+    }
+}
+
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,7 +64,7 @@ echo '<!DOCTYPE html>
             left: -250px;
             width: 250px;
             height: 100%;
-            background-color: rgba(255, 0, 0, 0.8); /* Rojo transparente */
+            background-color: rgba(139, 0, 0, 0.8); /* Rojo oscuro con 80% transparencia */
             padding-top: 60px;
             transition: left 0.3s;
             z-index: 1500;
@@ -82,4 +118,49 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
     <div id="perfiles">';
+
+// Mostrar perfiles
+foreach ($perfiles as $index => $perfil) {
+    echo '<div class="perfil" onclick="openModal(' . $index . ')">
+            <img src="' . $directorio . '/' . $perfil['imagen'] . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
+            <h3>' . htmlspecialchars($perfil['nombre']) . '</h3>
+        </div>';
+}
+
+echo '</div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalNombre"></h2>
+            <img id="modalImagen" src="" alt="Imagen">
+            <p id="modalDescripcion"></p>
+            <p id="modalInstagram"></p>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var modalNombre = document.getElementById("modalNombre");
+        var modalImagen = document.getElementById("modalImagen");
+        var modalDescripcion = document.getElementById("modalDescripcion");
+        var modalInstagram = document.getElementById("modalInstagram");
+
+        var perfiles = ' . json_encode($perfiles) . ';
+
+        function openModal(index) {
+            var perfil = perfiles[index];
+            modal.style.display = "flex";
+            modalNombre.textContent = perfil.nombre;
+            modalImagen.src = "' . $directorio . '/" + perfil.imagen;
+            modalDescripcion.textContent = perfil.descripcion || "Sin descripción";
+            modalInstagram.innerHTML = perfil.instagram ? "<a href=\'https://instagram.com/" + perfil.instagram + "\'>@" + perfil.instagram + "</a>" : "Sin Instagram";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>';
 ?>
