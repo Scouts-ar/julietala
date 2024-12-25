@@ -11,7 +11,6 @@ foreach ($archivos as $archivo) {
         $nombre = $instagram = $descripcion = '';
         $nombrePerfil = pathinfo($archivo, PATHINFO_FILENAME);
 
-        // Extraer información del HTML con expresiones regulares
         if (preg_match('/<h3>(.*?)<\/h3>/', $contenido, $matchNombre)) {
             $nombre = $matchNombre[1];
         }
@@ -22,10 +21,8 @@ foreach ($archivos as $archivo) {
             $descripcion = $matchDescripcion[1];
         }
 
-        // Verificar si existe la imagen correspondiente
         $imagen = file_exists("$directorio/$nombrePerfil.jpg") ? "$nombrePerfil.jpg" : "default.jpg";
 
-        // Agregar el perfil al array
         $perfiles[] = [
             'nombre' => $nombre,
             'instagram' => $instagram,
@@ -35,7 +32,6 @@ foreach ($archivos as $archivo) {
     }
 }
 
-// HTML inicial
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,6 +52,9 @@ echo '<!DOCTYPE html>
             left: 10px;
             z-index: 2000;
         }
+        #menu-toggle.open {
+            display: none; /* Ocultar rayitas cuando el menú está abierto */
+        }
         #sidebar {
             position: fixed;
             top: 0;
@@ -66,6 +65,9 @@ echo '<!DOCTYPE html>
             padding-top: 60px;
             transition: left 0.3s;
             z-index: 1500;
+        }
+        #sidebar.open {
+            left: 0; /* Mostrar barra lateral */
         }
         #sidebar ul {
             list-style-type: none;
@@ -81,10 +83,9 @@ echo '<!DOCTYPE html>
         }
         #perfiles {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 perfiles por fila */
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             padding: 20px;
-            margin-left: 0; /* Espacio para el menú */
         }
         #perfiles .perfil {
             text-align: center;
@@ -129,6 +130,7 @@ echo '<!DOCTYPE html>
             cursor: pointer;
         }
     </style>
+    <script src="script.js"></script>
 </head>
 <body>
     <div id="menu-toggle">&#9776;</div>
@@ -142,7 +144,6 @@ echo '<!DOCTYPE html>
     </div>
     <div id="perfiles">';
 
-// Mostrar perfiles
 foreach ($perfiles as $index => $perfil) {
     echo '<div class="perfil" onclick="openModal(' . $index . ')">
             <img src="' . $directorio . '/' . $perfil['imagen'] . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
@@ -152,7 +153,6 @@ foreach ($perfiles as $index => $perfil) {
 
 echo '</div>
 
-    <!-- Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -164,19 +164,6 @@ echo '</div>
     </div>
 
     <script>
-        // Menú desplegable
-        var sidebar = document.getElementById("sidebar");
-        var menuToggle = document.getElementById("menu-toggle");
-        
-        menuToggle.onclick = function() {
-            if (sidebar.style.left === "-250px") {
-                sidebar.style.left = "0";
-            } else {
-                sidebar.style.left = "-250px";
-            }
-        };
-
-        // Modal
         var modal = document.getElementById("myModal");
         var modalNombre = document.getElementById("modalNombre");
         var modalImagen = document.getElementById("modalImagen");
