@@ -55,10 +55,8 @@ echo '<!DOCTYPE html>
         }
         #header {
             text-align: center;
-            padding: 20px 10px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 10px;;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             position: fixed;
             top: 0;
             left: 0;
