@@ -84,10 +84,11 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
 
-    <div class="content">
-        <h1>Bienvenidos a la Página</h1>
-        <p>Este es un ejemplo de página con un fondo degradado que va de un rojo oscuro en los bordes a un rojo más claro en el centro. Puedes personalizar el contenido a tu gusto.</p>
-    </div>
+    <div id="imagen-bienvenida">
+            <h1 id="bienvenida-titulo">MIEMBROS DE LA COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
+            
+            
+        </div>
 
     <!-- Reutilizando el mismo script -->
     <script src="script.js"></script>
