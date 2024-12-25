@@ -1,40 +1,4 @@
 <?php
-// Configuración de la carpeta de perfiles
-$directorio = 'perfiles';
-$archivos = array_diff(scandir($directorio), array('..', '.'));
-$perfiles = [];
-
-// Extraer información de cada archivo HTML en la carpeta
-foreach ($archivos as $archivo) {
-    if (pathinfo($archivo, PATHINFO_EXTENSION) === 'html') {
-        $contenido = file_get_contents($directorio . '/' . $archivo);
-        $nombre = $instagram = $descripcion = '';
-        $nombrePerfil = pathinfo($archivo, PATHINFO_FILENAME);
-
-        // Extraer información del HTML
-        if (preg_match('/<h3>(.*?)<\/h3>/', $contenido, $matchNombre)) {
-            $nombre = $matchNombre[1];
-        }
-        if (preg_match('/Instagram:\s*(.*?)<\/p>/', $contenido, $matchInstagram)) {
-            $instagram = $matchInstagram[1];
-        }
-        if (preg_match('/<p>(?!Instagram)(.*?)<\/p>/', $contenido, $matchDescripcion)) {
-            $descripcion = $matchDescripcion[1];
-        }
-
-        // Verificar si existe la imagen correspondiente
-        $imagen = file_exists("$directorio/$nombrePerfil.jpg") ? "$nombrePerfil.jpg" : "default.jpg";
-
-        // Agregar perfil al array
-        $perfiles[] = [
-            'nombre' => $nombre,
-            'instagram' => $instagram,
-            'descripcion' => $descripcion,
-            'imagen' => $imagen,
-        ];
-    }
-}
-
 echo '<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -55,34 +19,19 @@ echo '<!DOCTYPE html>
             left: 10px;
             z-index: 2000;
         }
-        #menu-toggle.open {
-            display: none;
-        }
         #sidebar {
             position: fixed;
             top: 0;
             left: -250px;
             width: 250px;
             height: 100%;
-            background-color: rgba(139, 0, 0, 0.8); /* Rojo oscuro con 80% transparencia */
+            background-color: rgba(139, 0, 0, 0.8);
             padding-top: 60px;
             transition: left 0.3s;
             z-index: 1500;
         }
         #sidebar.open {
             left: 0;
-        }
-        #sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        #sidebar ul li {
-            padding: 15px;
-            text-align: center;
-        }
-        #sidebar ul li a img {
-            width: 40px;
-            height: auto;
         }
         #perfiles {
             display: grid;
@@ -103,6 +52,65 @@ echo '<!DOCTYPE html>
             width: 100%;
             height: auto;
             border-radius: 5px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(50, 50, 50, 0.5); /* Fondo gris oscuro con transparencia */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            width: 80%;
+            max-height: 80%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .modal-left {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .modal-left img {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .social-buttons a {
+            margin: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+        .modal-right {
+            flex: 2;
+            padding: 30px;
+        }
+        .modal-right h2 {
+            margin: 0 0 20px;
+        }
+        .modal-right p {
+            line-height: 1.6;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            color: #fff;
+            cursor: pointer;
         }
     </style>
     <script src="script.js"></script>
@@ -129,13 +137,22 @@ foreach ($perfiles as $index => $perfil) {
 
 echo '</div>
 
+    <!-- Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalNombre"></h2>
-            <img id="modalImagen" src="" alt="Imagen">
-            <p id="modalDescripcion"></p>
-            <p id="modalInstagram"></p>
+            <div class="modal-left">
+                <img id="modalImagen" src="" alt="Imagen del perfil">
+                <div class="social-buttons">
+                    <a href="#" id="modalInstagram" target="_blank">📸</a>
+                    <a href="#" id="modalTwitter" target="_blank">🐦</a>
+                    <a href="#" id="modalFacebook" target="_blank">📘</a>
+                </div>
+            </div>
+            <div class="modal-right">
+                <h2 id="modalNombre"></h2>
+                <p id="modalDescripcion"></p>
+            </div>
         </div>
     </div>
 
@@ -154,7 +171,7 @@ echo '</div>
             modalNombre.textContent = perfil.nombre;
             modalImagen.src = "' . $directorio . '/" + perfil.imagen;
             modalDescripcion.textContent = perfil.descripcion || "Sin descripción";
-            modalInstagram.innerHTML = perfil.instagram ? "<a href=\'https://instagram.com/" + perfil.instagram + "\'>@" + perfil.instagram + "</a>" : "Sin Instagram";
+            modalInstagram.href = perfil.instagram ? "https://instagram.com/" + perfil.instagram : "#";
         }
 
         function closeModal() {
