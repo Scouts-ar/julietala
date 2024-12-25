@@ -1,6 +1,7 @@
 <?php
 // Escanea la carpeta perfiles
 $dir = 'perfiles';
+$imgDir = 'perfiles/img';
 $files = array_diff(scandir($dir), array('..', '.'));
 
 echo '<!DOCTYPE html>
@@ -55,7 +56,7 @@ echo '<!DOCTYPE html>
         }
         #header {
             text-align: center;
-            padding: 20px 10px;;
+            padding: 20px 10px;
             width: 100%;
             position: fixed;
             top: 0;
@@ -73,25 +74,39 @@ echo '<!DOCTYPE html>
             padding: 100px 20px 20px;
             text-align: center;
         }
-        #profile-list {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 800px;
+        .profile-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .profile-card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
-        #profile-list li {
-            list-style: none;
-            margin: 10px 0;
+        .profile-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
-        #profile-list a {
-            color: #FFD700;
-            font-size: 1.2rem;
-            text-decoration: none;
+        .profile-card h2 {
+            margin: 15px 0;
+            font-size: 1.5rem;
+        }
+        .profile-card button {
+            background-color: #FFD700;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 20px;
             cursor: pointer;
+            border-radius: 5px;
         }
-        /* Estilo modal */
         .modal {
             display: none;
             position: fixed;
@@ -140,18 +155,27 @@ echo '<!DOCTYPE html>
     </div>
 
     <div class="content">
-        <p>Bienvenido a la comunidad. Haz clic en un perfil para verlo.</p>
-        <ul id="profile-list">';
+        <p>Explora los perfiles de nuestros miembros.</p>
+        <div class="profile-grid">';
 
 // Listar los archivos HTML
 foreach ($files as $file) {
     if (pathinfo($file, PATHINFO_EXTENSION) == 'html') {
         $name = pathinfo($file, PATHINFO_FILENAME);
-        echo "<li><a href='#' onclick='openModal(\"$dir/$file\")'>$name</a></li>";
+        $imgPath = "$imgDir/$name.jpg";
+        if (!file_exists($imgPath)) {
+            $imgPath = "logos/default.png";
+        }
+        echo "
+        <div class='profile-card'>
+            <img src='$imgPath' alt='$name'>
+            <h2>$name</h2>
+            <button onclick='openModal(\"$dir/$file\")'>Ver Perfil</button>
+        </div>";
     }
 }
 
-echo '</ul>
+echo '</div>
     </div>
 
     <div id="myModal" class="modal">
