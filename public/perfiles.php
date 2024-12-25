@@ -100,7 +100,6 @@ echo '<!DOCTYPE html>
 
     <div id="imagen-bienvenida">
         <h1 id="bienvenida-titulo">MIEMBROS DE LA COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
-        <img src="logos/bienvenida.png" alt="Bienvenida a la comunidad">
     </div>
 
     <script src="script.js"></script>
