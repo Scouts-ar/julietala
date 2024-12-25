@@ -19,41 +19,6 @@ echo '<!DOCTYPE html>
             height: 100vh;
             color: white;
         }
-        #menu-toggle {
-            font-size: 30px;
-            cursor: pointer;
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 2000;
-            color: white;
-        }
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: rgba(139, 0, 0, 0.8);
-            padding-top: 60px;
-            transition: left 0.3s;
-            z-index: 1500;
-        }
-        #sidebar.open {
-            left: 0;
-        }
-        #sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        #sidebar li {
-            padding: 15px;
-            text-align: center;
-        }
-        #sidebar li a {
-            color: white;
-            text-decoration: none;
-        }
         #header {
             text-align: center;
             padding: 20px 10px;
@@ -87,7 +52,7 @@ echo '<!DOCTYPE html>
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             overflow: hidden;
-            width: 220px;
+            width: 200px;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -99,12 +64,12 @@ echo '<!DOCTYPE html>
         }
         .profile-card img {
             width: 100%;
-            height: 180px;
+            height: 160px;
             object-fit: cover;
         }
         .profile-card h2 {
             margin: 15px 0;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
         .modal {
             display: none;
@@ -139,7 +104,11 @@ echo '<!DOCTYPE html>
     </style>
 </head>
 <body>
+
+    <!-- Icono de menú -->
     <div id="menu-toggle">&#9776;</div>
+
+    <!-- Barra lateral -->
     <div id="sidebar">
         <ul>
             <li><a href="index.html"><img src="logos/inicio.png" alt="Inicio"></a></li>
@@ -183,6 +152,7 @@ echo '</div>
         </div>
     </div>
 
+    <script src="script.js"></script>
     <script>
         function openModal(url) {
             var modal = document.getElementById("myModal");
@@ -193,6 +163,8 @@ echo '</div>
         function closeModal() {
             var modal = document.getElementById("myModal");
             modal.style.display = "none";
+            var iframe = document.getElementById("modal-iframe");
+            iframe.src = "";
         }
     </script>
 </body>
