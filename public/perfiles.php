@@ -7,16 +7,14 @@ echo '<!DOCTYPE html>
     <title>Página con Fondo Degradado</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilo base de la página */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: radial-gradient(circle, #b71c1c, #d32f2f, #8b0000); /* Fondo degradado de rojo claro a oscuro */
+            background: radial-gradient(circle, #b71c1c, #d32f2f, #8b0000);
             height: 100vh;
             color: white;
         }
 
-        /* Barra lateral (menú) */
         #menu-toggle {
             font-size: 30px;
             cursor: pointer;
@@ -63,10 +61,9 @@ echo '<!DOCTYPE html>
             height: 30px;
         }
 
-        /* Contenedor principal */
         .content {
             padding: 20px;
-            margin-left: 260px; /* Espacio para la barra lateral */
+            margin-left: 260px;
         }
 
         h1 {
@@ -75,7 +72,6 @@ echo '<!DOCTYPE html>
         }
 
     </style>
-    <script src="script.js"></script>
 </head>
 <body>
     <div id="menu-toggle">&#9776;</div>
@@ -93,15 +89,8 @@ echo '<!DOCTYPE html>
         <p>Este es un ejemplo de página con un fondo degradado que va de un rojo oscuro en los bordes a un rojo más claro en el centro. Puedes personalizar el contenido a tu gusto.</p>
     </div>
 
-    <script>
-        // Script para abrir y cerrar la barra lateral
-        var menuToggle = document.getElementById("menu-toggle");
-        var sidebar = document.getElementById("sidebar");
-
-        menuToggle.addEventListener("click", function() {
-            sidebar.classList.toggle("open");
-        });
-    </script>
+    <!-- Reutilizando el mismo script -->
+    <script src="script.js"></script>
 </body>
 </html>';
 ?>
