@@ -12,12 +12,7 @@ echo '<!DOCTYPE html>
             font-family: Arial, sans-serif;
             background: radial-gradient(circle, #b71c1c, #d32f2f, #8b0000);
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             color: white;
-            text-align: center;
-            flex-direction: column;
         }
 
         #menu-toggle {
@@ -66,24 +61,29 @@ echo '<!DOCTYPE html>
             height: 30px;
         }
 
-        #imagen-bienvenida {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #imagen-bienvenida img {
-            max-width: 600px;
+        #header {
+            text-align: center;
+            padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.3);
             width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
 
-        #bienvenida-titulo {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        #header h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .content {
+            padding: 80px 20px 20px; /* Espacio para el encabezado */
+            text-align: center;
         }
     </style>
 </head>
@@ -98,10 +98,18 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
 
-    <div id="imagen-bienvenida">
-        <h1 id="bienvenida-titulo">MIEMBROS DE LA COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
+    <!-- Título en la parte superior -->
+    <div id="header">
+        <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
     </div>
 
+    <!-- Contenido principal -->
+    <div class="content">
+        <p>Bienvenido a la comunidad. Aquí puedes explorar información y fotos de nuestros miembros.</p>
+        <img src="logos/bienvenida.png" alt="Bienvenida a la comunidad" width="300px">
+    </div>
+
+    <!-- Script para la barra lateral -->
     <script src="script.js"></script>
 </body>
 </html>';
