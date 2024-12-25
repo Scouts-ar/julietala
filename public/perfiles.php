@@ -7,10 +7,16 @@ echo '<!DOCTYPE html>
     <title>Perfiles</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Estilo base de la página */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #d32f2f, #b71c1c); /* Fondo rojo degradado */
+            height: 100vh;
+            color: white;
         }
+
+        /* Barra lateral (menú) */
         #menu-toggle {
             font-size: 30px;
             cursor: pointer;
@@ -18,7 +24,9 @@ echo '<!DOCTYPE html>
             top: 10px;
             left: 10px;
             z-index: 2000;
+            color: white;
         }
+
         #sidebar {
             position: fixed;
             top: 0;
@@ -30,15 +38,40 @@ echo '<!DOCTYPE html>
             transition: left 0.3s;
             z-index: 1500;
         }
+
         #sidebar.open {
             left: 0;
         }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar li {
+            padding: 15px;
+            text-align: center;
+        }
+
+        #sidebar li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #sidebar li a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Perfiles */
         #perfiles {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             padding: 20px;
+            margin-left: 260px;
         }
+
         #perfiles .perfil {
             text-align: center;
             border: 1px solid #ddd;
@@ -48,12 +81,13 @@ echo '<!DOCTYPE html>
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
         }
+
         #perfiles img {
             width: 100%;
             height: auto;
             border-radius: 5px;
         }
-        
+
         /* Modal */
         .modal {
             display: none;
@@ -66,6 +100,7 @@ echo '<!DOCTYPE html>
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
             display: flex;
             background-color: #fff;
@@ -75,6 +110,7 @@ echo '<!DOCTYPE html>
             height: 80%;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
+
         .modal-left {
             flex: 1;
             padding: 20px;
@@ -85,6 +121,7 @@ echo '<!DOCTYPE html>
             background-color: #f3f3f3;
             border-radius: 10px 0 0 10px;
         }
+
         .modal-left img {
             width: 200px;
             height: 200px;
@@ -92,11 +129,13 @@ echo '<!DOCTYPE html>
             object-fit: cover;
             margin-bottom: 20px;
         }
+
         .social-buttons a {
             margin: 10px;
             font-size: 24px;
             color: #333;
         }
+
         .modal-right {
             flex: 2;
             padding: 30px;
@@ -104,17 +143,20 @@ echo '<!DOCTYPE html>
             flex-direction: column;
             justify-content: flex-start;
         }
+
         .modal-right h2 {
             margin: 0 0 20px;
             font-size: 24px;
             color: #333;
         }
+
         .modal-right p {
             line-height: 1.6;
             font-size: 16px;
             color: #555;
             text-align: justify;
         }
+
         .close {
             position: absolute;
             top: 15px;
@@ -138,7 +180,7 @@ echo '<!DOCTYPE html>
     </div>
     <div id="perfiles">';
 
-// Mostrar perfiles
+// Mostrar perfiles (puedes cargar los perfiles desde tu base de datos o una variable PHP)
 foreach ($perfiles as $index => $perfil) {
     echo '<div class="perfil" onclick="openModal(' . $index . ')">
             <img src="' . htmlspecialchars($directorio) . '/' . htmlspecialchars($perfil['imagen']) . '" alt="' . htmlspecialchars($perfil['nombre']) . '">
