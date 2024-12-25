@@ -57,7 +57,9 @@ echo '<!DOCTYPE html>
         #header {
             text-align: center;
             padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.3);
             width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             position: fixed;
             top: 0;
             left: 0;
@@ -85,27 +87,24 @@ echo '<!DOCTYPE html>
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             overflow: hidden;
-            width: 300px;
+            width: 220px;
+            cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
         }
         .profile-card img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
         }
         .profile-card h2 {
             margin: 15px 0;
-            font-size: 1.5rem;
-        }
-        .profile-card button {
-            background-color: #FFD700;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            border-radius: 5px;
+            font-size: 1.3rem;
         }
         .modal {
             display: none;
@@ -167,10 +166,9 @@ foreach ($files as $file) {
             $imgPath = "logos/default.png";
         }
         echo "
-        <div class='profile-card'>
+        <div class='profile-card' onclick='openModal(\"$dir/$file\")'>
             <img src='$imgPath' alt='$name'>
             <h2>$name</h2>
-            <button onclick='openModal(\"$dir/$file\")'>Ver Perfil</button>
         </div>";
     }
 }
