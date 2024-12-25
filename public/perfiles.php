@@ -12,7 +12,12 @@ echo '<!DOCTYPE html>
             font-family: Arial, sans-serif;
             background: radial-gradient(circle, #b71c1c, #d32f2f, #8b0000);
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
+            text-align: center;
+            flex-direction: column;
         }
 
         #menu-toggle {
@@ -61,16 +66,25 @@ echo '<!DOCTYPE html>
             height: 30px;
         }
 
-        .content {
-            padding: 20px;
-            margin-left: 260px;
+        #imagen-bienvenida {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 50px;
+        #imagen-bienvenida img {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
+        #bienvenida-titulo {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -85,12 +99,10 @@ echo '<!DOCTYPE html>
     </div>
 
     <div id="imagen-bienvenida">
-            <h1 id="bienvenida-titulo">MIEMBROS DE LA COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
-            
-            
-        </div>
+        <h1 id="bienvenida-titulo">MIEMBROS DE LA COMUNIDAD <span style="color: #FFD700;">PREMPEH</span></h1>
+        <img src="logos/bienvenida.png" alt="Bienvenida a la comunidad">
+    </div>
 
-    <!-- Reutilizando el mismo script -->
     <script src="script.js"></script>
 </body>
 </html>';
