@@ -62,7 +62,7 @@ echo '<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(50, 50, 50, 0.5);
+            background-color: rgba(50, 50, 50, 0.5); /* Fondo gris oscuro con transparencia */
             justify-content: center;
             align-items: center;
         }
@@ -80,6 +80,7 @@ echo '<!DOCTYPE html>
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
         }
         .modal-left img {
             width: 200px;
@@ -90,9 +91,8 @@ echo '<!DOCTYPE html>
         }
         .social-buttons a {
             margin: 10px;
-            font-size: 30px;
+            font-size: 24px;
             color: #333;
-            text-decoration: none;
         }
         .modal-right {
             flex: 2;
@@ -147,8 +147,6 @@ echo '</div>
                     <a href="#" id="modalInstagram" target="_blank">📸</a>
                     <a href="#" id="modalTwitter" target="_blank">🐦</a>
                     <a href="#" id="modalFacebook" target="_blank">📘</a>
-                    <a href="#" id="modalLinkedin" target="_blank">🔗</a>
-                    <a href="#" id="modalYoutube" target="_blank">▶️</a>
                 </div>
             </div>
             <div class="modal-right">
@@ -163,12 +161,7 @@ echo '</div>
         var modalNombre = document.getElementById("modalNombre");
         var modalImagen = document.getElementById("modalImagen");
         var modalDescripcion = document.getElementById("modalDescripcion");
-
         var modalInstagram = document.getElementById("modalInstagram");
-        var modalTwitter = document.getElementById("modalTwitter");
-        var modalFacebook = document.getElementById("modalFacebook");
-        var modalLinkedin = document.getElementById("modalLinkedin");
-        var modalYoutube = document.getElementById("modalYoutube");
 
         var perfiles = ' . json_encode($perfiles) . ';
 
@@ -178,13 +171,7 @@ echo '</div>
             modalNombre.textContent = perfil.nombre;
             modalImagen.src = "' . $directorio . '/" + perfil.imagen;
             modalDescripcion.textContent = perfil.descripcion || "Sin descripción";
-
-            // Actualizar enlaces de redes sociales
             modalInstagram.href = perfil.instagram ? "https://instagram.com/" + perfil.instagram : "#";
-            modalTwitter.href = perfil.twitter ? "https://twitter.com/" + perfil.twitter : "#";
-            modalFacebook.href = perfil.facebook ? "https://facebook.com/" + perfil.facebook : "#";
-            modalLinkedin.href = perfil.linkedin ? "https://linkedin.com/in/" + perfil.linkedin : "#";
-            modalYoutube.href = perfil.youtube ? "https://youtube.com/" + perfil.youtube : "#";
         }
 
         function closeModal() {
