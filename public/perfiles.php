@@ -108,10 +108,8 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
 
-    <!-- Título directamente -->
-    <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
-
     <div class="content">
+        <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
         <p>Explora los perfiles de nuestros miembros.</p>
         <div class="profile-grid">';
 
