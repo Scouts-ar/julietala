@@ -19,26 +19,16 @@ echo '<!DOCTYPE html>
             height: 100vh;
             color: white;
         }
-        #header {
+        h1 {
             text-align: center;
-            padding: 20px 10px;
-            background: rgba(0, 0, 0, 0.3);
-            width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-        #header h1 {
             font-size: 2rem;
-            margin: 0;
+            margin: 40px 0 20px;
             color: #FFD700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
         .content {
-            padding: 100px 20px 20px;
+            padding: 20px;
             text-align: center;
         }
         .profile-grid {
@@ -118,9 +108,8 @@ echo '<!DOCTYPE html>
         </ul>
     </div>
 
-    <div id="header">
-        <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
-    </div>
+    <!-- Título directamente -->
+    <h1>MIEMBROS DE LA COMUNIDAD PREMPEH</h1>
 
     <div class="content">
         <p>Explora los perfiles de nuestros miembros.</p>
