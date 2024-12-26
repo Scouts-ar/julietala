@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Perfiles</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding-top: 240px;
+        }
+        .editor-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1000px;
+        }
+        .editor-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .editor-container input, .editor-container textarea, .editor-container button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .editor-container textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .button-container button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+        .preview-container {
+            background-color: white;
+            padding: 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 400px;
+        }
+        .left-side {
+            background-color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 250px;
+            height: 100%;
+        }
+        .left-side img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #fff;
+        }
+        .social-links {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+        }
+        .social-links a {
+            background-color: #555;
+            color: white;
+            font-size: 16px;
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .social-links a:hover {
+            background-color: #444;
+        }
+        .preview-text {
+            margin-left: 0;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .preview-text h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .preview-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .editor-container .socialLinkContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .socialLinkContainer input {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .socialLinkContainer button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .socialLinkContainer button:hover {
+            background-color: #e74c3c;
+        }
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="title">Editor de Perfiles</div>
+
+    <div class="editor-container">
+        <h2>Editar Perfil</h2>
+        <input type="text" id="name" placeholder="Nombre" value="Juan Pérez">
+        <input type="url" id="imageUrl" placeholder="URL de la imagen">
+        <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+        <textarea id="bioText" rows="5" placeholder="Escribe tu biografía">¡Hola! Mi nombre es Juan Pérez y soy un apasionado del diseño web. Desde joven, siempre he tenido un interés por las tecnologías digitales, lo que me llevó a estudiar programación y diseño de interfaces. Me encanta resolver problemas y crear soluciones creativas que mejoren la experiencia de los usuarios.</textarea>
+
+        <div class="button-container">
+            <button onclick="addSocialLink()">Agregar Red Social</button>
+        </div>
+        
+        <div id="socialLinksContainer">
+            <div class="socialLinkContainer">
+                <input type="url" class="socialLink" placeholder="Enlace a Facebook" value="https://facebook.com">
+                <input type="text" class="socialName" placeholder="Nombre de la Red Social" value="Facebook">
+                <button onclick="removeSocialLink(this)">Eliminar</button>
+            </div>
+            <div class="socialLinkContainer">
+                <input type="url" class="socialLink" placeholder="Enlace a Instagram" value="https://instagram.com">
+                <input type="text" class="socialName" placeholder="Nombre de la Red Social" value="Instagram">
+                <button onclick="removeSocialLink(this)">Eliminar</button>
+            </div>
+        </div>
+        
+        <button onclick="generatePreview()">Generar Previo</button>
+        
+        <div class="preview-container" id="preview">
+            <div class="left-side">
+                <img id="previewImage" src="" alt="Foto de perfil" style="display: none;">
+                <div class="social-links" id="previewSocialLinks">
+                    <!-- Redes sociales se añadirán dinámicamente -->
+                </div>
+            </div>
+            <div class="preview-text">
+                <h1 id="previewName">Juan Pérez</h1>
+                <div class="history">
+                <p id="previewBio">?Hola! Mi nombre es Juan P?rez y soy un apasionado del dise?o web. Desde joven, siempre he tenido un inter?s por las tecnolog?as digitales, lo que me llev? a estudiar programaci?n y dise?o de interfaces. Me encanta resolver problemas y crear soluciones creativas que mejoren la experiencia de los usuarios.</p>
+                
+            </div>
+            </div>
+        </div>
+
+        <!-- Botón para descargar solo la vista previa con CSS -->
+        <div class="download-buttons">
+            <button onclick="downloadPreview()">Descargar Vista Previa</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePreview() {
+            const name = document.getElementById('name').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const bioText = document.getElementById('bioText').value;
+            const socialLinks = document.querySelectorAll('.socialLink');
+            const socialNames = document.querySelectorAll('.socialName');
+            
+            // Actualizar la vista previa
+            document.getElementById('previewName').textContent = name;
+            document.getElementById('previewBio').textContent = bioText;
+            
+            // Mostrar la imagen si es válida
+            const previewImage = document.getElementById('previewImage');
+            if (imageUrl) {
+                previewImage.style.display = 'block';
+                previewImage.src = imageUrl;
+            } else {
+                previewImage.style.display = 'none';
+            }
+
+            // Actualizar enlaces sociales
+            const previewSocialLinks = document.getElementById('previewSocialLinks');
+            previewSocialLinks.innerHTML = ''; // Limpiar enlaces existentes
+            socialLinks.forEach((link, index) => {
+                if (link.value.trim() !== "") {
+                    const name = socialNames[index].value.trim() || link.value; // Si no se pone nombre, usa la URL
+                    const anchor = document.createElement('a');
+                    anchor.href = link.value;
+                    anchor.target = '_blank';
+                    anchor.textContent = name;
+                    anchor.classList.add('social-links');
+                    previewSocialLinks.appendChild(anchor);
+                }
+            });
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('previewImage').src = reader.result;
+                document.getElementById('previewImage').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addSocialLink() {
+            const socialLinksContainer = document.getElementById('socialLinksContainer');
+            const newLink = document.createElement('div');
+            newLink.classList.add('socialLinkContainer');
+            newLink.innerHTML = `
+                <input type="url" class="socialLink" placeholder="Enlace a la red social">
+                <input type="text" class="socialName" placeholder="Nombre de la Red Social">
+                <button onclick="removeSocialLink(this)">Eliminar</button>
+            `;
+            socialLinksContainer.appendChild(newLink);
+        }
+
+        function removeSocialLink(button) {
+            button.parentElement.remove();
+            generatePreview(); // Actualizar la vista previa
+        }
+
+        function downloadPreview() {
+            const name = document.getElementById('name').value;
+            const htmlContent = document.getElementById('preview').outerHTML;
+            const styleContent = `
+                body {
+                    font-family: 'Arial', sans-serif;
+                    background-color: #f7f7f7;
+                    display: flex;
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                }
+                .preview-container {
+                    display: flex;
+                    justify-content: space-between;
+                    background-color: white;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    width: 100%;
+                }
+                .left-side {
+                    background-color: #333;
+                    color: white;
+                    padding: 20px;
+                    width: 250px;
+                    height: 100%;
+                }
+                .left-side img {
+                    width: 100%;
+                    object-fit: cover;
+                    border-radius: 12px;
+                    border: 2px solid #fff;
+                }
+                .social-links {
+                    margin-top: 15px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                    align-items: center;
+                    width: 100%;
+                }
+                .social-links a {
+                    background-color: #555;
+                    color: white;
+                    font-size: 16px;
+                    padding: 14px;
+                    text-align: center;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    width: 100%;
+                }
+                .social-links a:hover {
+                    background-color: #444;
+                }
+                .preview-text {
+                    margin-left: 20px;
+                    flex: 1;
+                    padding: 20px;
+                }
+                .preview-text h1 {
+                    font-size: 1.8rem;
+                    color: #333;
+                }
+                .preview-text p {
+                    font-size: 1rem;
+                    line-height: 1.8;
+                    color: #555;
+                }
+                .preview-text .history {
+
+                    background-color: white;
+
+                    padding: 20px;
+
+                    border-radius: 10px;
+
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+                    margin-top: 20px;
+
+                }
+            `;
+            const blob = new Blob([`
+                <html>
+                    <head>
+                        <style>${styleContent}</style>
+                    </head>
+                    <body>
+                        ${htmlContent}
+                    </body>
+                </html>
+            `], { type: 'text/html' });
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${name}.html`;
+            link.click();
+
+            // Descargar la imagen también con el mismo nombre
+            const imageUrl = document.getElementById('previewImage').src;
+            if (imageUrl && imageUrl.startsWith('data:image')) {
+                const imageBlob = dataURItoBlob(imageUrl);
+                const imageLink = document.createElement('a');
+                imageLink.href = URL.createObjectURL(imageBlob);
+                imageLink.download = `${name}.jpg`; 
+                imageLink.click();
+            }
+        }
+
+        // Convertir data URI a Blob
+        function dataURItoBlob(dataURI) {
+            const byteString = atob(dataURI.split(',')[1]);
+            const arrayBuffer = new ArrayBuffer(byteString.length);
+            const uintArray = new Uint8Array(arrayBuffer);
+            for (let i = 0; i < byteString.length; i++) {
+                uintArray[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([uintArray], { type: 'image/jpeg' });
+        }
+    </script>
+</body>
+</html>
+
