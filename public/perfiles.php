@@ -70,18 +70,21 @@ echo '<!DOCTYPE html>
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro con opacidad */
         }
+
         .modal-content {
-            background-color: #fefefe;
+            background-color: #333333; /* Gris oscuro */
             margin: 10% auto;
             padding: 20px;
+            border-radius: 15px; /* Bordes redondeados */
             border: 1px solid #888;
             width: 80%;
             max-width: 800px;
-            color: black;
+            color: white; /* Texto en blanco */
             position: relative;
         }
+         
         .close {
             color: #aaa;
             position: absolute;
