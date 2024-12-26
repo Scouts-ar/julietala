@@ -164,10 +164,10 @@
 
     <div class="editor-container">
         <h2>Editar Perfil</h2>
-        <input type="text" id="name" placeholder="Nombre" value="Juan Pérez">
+        <input type="text" id="name" placeholder="Nombre" value="Juan PÃ©rez">
         <input type="url" id="imageUrl" placeholder="URL de la imagen">
         <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
-        <textarea id="bioText" rows="5" placeholder="Escribe tu biografía">¡Hola! Mi nombre es Juan Pérez y soy un apasionado del diseño web. Desde joven, siempre he tenido un interés por las tecnologías digitales, lo que me llevó a estudiar programación y diseño de interfaces. Me encanta resolver problemas y crear soluciones creativas que mejoren la experiencia de los usuarios.</textarea>
+        <textarea id="bioText" rows="5" placeholder="Escribe tu biografÃ­a">Â¡Hola! Mi nombre es Juan PÃ©rez y soy un apasionado del diseÃ±o web. Desde joven, siempre he tenido un interÃ©s por las tecnologÃ­as digitales, lo que me llevÃ³ a estudiar programaciÃ³n y diseÃ±o de interfaces. Me encanta resolver problemas y crear soluciones creativas que mejoren la experiencia de los usuarios.</textarea>
 
         <div class="button-container">
             <button onclick="addSocialLink()">Agregar Red Social</button>
@@ -192,19 +192,19 @@
             <div class="left-side">
                 <img id="previewImage" src="" alt="Foto de perfil" style="display: none;">
                 <div class="social-links" id="previewSocialLinks">
-                    <!-- Redes sociales se añadirán dinámicamente -->
+                    <!-- Redes sociales se aÃ±adirÃ¡n dinÃ¡micamente -->
                 </div>
             </div>
             <div class="preview-text">
-                <h1 id="previewName">Juan Pérez</h1>
+                <h1 id="previewName">tu nombre</h1>
                 <div class="history">
-                <p id="previewBio">?Hola! Mi nombre es Juan P?rez y soy un apasionado del dise?o web. Desde joven, siempre he tenido un inter?s por las tecnolog?as digitales, lo que me llev? a estudiar programaci?n y dise?o de interfaces. Me encanta resolver problemas y crear soluciones creativas que mejoren la experiencia de los usuarios.</p>
+                <p id="previewBio">aqui coloca tu descripciom.</p>
                 
             </div>
             </div>
         </div>
 
-        <!-- Botón para descargar solo la vista previa con CSS -->
+        <!-- BotÃ³n para descargar solo la vista previa con CSS -->
         <div class="download-buttons">
             <button onclick="downloadPreview()">Descargar Vista Previa</button>
         </div>
@@ -222,7 +222,7 @@
             document.getElementById('previewName').textContent = name;
             document.getElementById('previewBio').textContent = bioText;
             
-            // Mostrar la imagen si es válida
+            // Mostrar la imagen si es vÃ¡lida
             const previewImage = document.getElementById('previewImage');
             if (imageUrl) {
                 previewImage.style.display = 'block';
@@ -299,7 +299,6 @@
                     color: white;
                     padding: 20px;
                     width: 250px;
-                    height: 100%;
                 }
                 .left-side img {
                     width: 100%;
@@ -372,7 +371,7 @@
             link.download = `${name}.html`;
             link.click();
 
-            // Descargar la imagen también con el mismo nombre
+            // Descargar la imagen tambiÃ©n con el mismo nombre
             const imageUrl = document.getElementById('previewImage').src;
             if (imageUrl && imageUrl.startsWith('data:image')) {
                 const imageBlob = dataURItoBlob(imageUrl);
